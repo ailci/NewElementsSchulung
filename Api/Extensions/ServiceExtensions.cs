@@ -11,4 +11,11 @@ public static class ServiceExtensions
 
         return services;
     }
+
+    public static IServiceCollection ConfigureDb(this IServiceCollection services)
+    {
+
+
+        return services;
+    }
 }
