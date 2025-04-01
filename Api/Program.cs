@@ -1,3 +1,5 @@
+using Api.Middleware;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -27,6 +29,8 @@ var app = builder.Build();
 //{
 //    await context.Response.WriteAsync("Ende middleware\n");
 //});
+
+//app.UseBrowserAllowedMiddleware(Browser.Chrome, Browser.Edge);
 
 if (app.Environment.IsDevelopment())
 {
