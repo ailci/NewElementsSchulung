@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Shared.DataTransferObjects;
 
@@ -20,14 +21,14 @@ public class QotdController : ControllerBase
     [HttpGet]
     public IActionResult GetQuoteOfTheDay() // => localhost:7050/api/qotd
     {
-        var authors = _context.Authors.ToList();
+        var quote = _context.Quotes.Include(c => c.Author).First();
 
         var qotd = new QuoteOfTheDayDto
         {
-            AuthorName = "Ich",
-            AuthorDescription = "Dozent",
-            AuthorBirthDate = new DateOnly(1978, 07, 13),
-            QuoteText = "Larum Lierum"
+            AuthorName = quote.Author?.Name ?? "",
+            AuthorDescription = quote.Author?.Description ?? "",
+            AuthorBirthDate = quote.Author?.BirthDate,
+            QuoteText = quote.QuoteText
         };
 
         return Ok(qotd);
