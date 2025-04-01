@@ -1,4 +1,7 @@
-﻿namespace Api.Extensions;
+﻿using Microsoft.EntityFrameworkCore;
+using Persistence;
+
+namespace Api.Extensions;
 
 public static class ServiceExtensions
 {
@@ -12,9 +15,14 @@ public static class ServiceExtensions
         return services;
     }
 
-    public static IServiceCollection ConfigureDb(this IServiceCollection services)
+    public static IServiceCollection ConfigureDb(this IServiceCollection services, IConfiguration config)
     {
+        var connectionString = config.GetConnectionString("DefaultConnection");
 
+        services.AddDbContext<QotdContext>(options =>
+        {
+            options.UseSqlServer(connectionString);
+        });
 
         return services;
     }

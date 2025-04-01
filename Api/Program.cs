@@ -4,7 +4,8 @@ using Api.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .ConfigureApi();  //WebApi
+    .ConfigureApi() //WebApi
+    .ConfigureDb(builder.Configuration);  //Db
 
 
 var app = builder.Build();
