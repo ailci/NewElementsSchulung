@@ -1,8 +1,12 @@
 using Api.Controllers;
 using Api.Extensions;
 using Api.Middleware;
+using Logging;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Serilog
+builder.ConfigLoggingService();
 
 builder.Services
     .ConfigureApi() //WebApi
