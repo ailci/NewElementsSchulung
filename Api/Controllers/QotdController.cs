@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Persistence.Contracts;
 using Shared.DataTransferObjects;
 
 namespace Api.Controllers;
@@ -11,23 +12,26 @@ namespace Api.Controllers;
 [ApiController]
 public class QotdController : ControllerBase
 {
-    private readonly QotdContext _context;
+    private readonly IRepositoryManager _repositoryManager;
 
-    public QotdController(QotdContext context)
+    public QotdController(IRepositoryManager repositoryManager)
     {
-        _context = context;
+        _repositoryManager = repositoryManager;
     }
 
     [HttpGet]
-    public IActionResult GetQuoteOfTheDay() // => localhost:7050/api/qotd
+    public async Task<IActionResult> GetQuoteOfTheDayAsync() // => localhost:7050/api/qotd
     {
-        var quote = _context.Quotes.Include(c => c.Author).First();
+        var quote = await _repositoryManager.QuoteRepo.GetRandomQuoteAsync();
 
         var qotd = new QuoteOfTheDayDto
         {
+            Id = quote.Id,
             AuthorName = quote.Author?.Name ?? "",
             AuthorDescription = quote.Author?.Description ?? "",
             AuthorBirthDate = quote.Author?.BirthDate,
+            AuthorPhoto = quote.Author?.Photo,
+            AuthorPhotoMimeType = quote.Author?.PhotoMimeType,
             QuoteText = quote.QuoteText
         };
 
