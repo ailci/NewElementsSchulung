@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Api.Controllers;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Persistence.Contracts;
 using Persistence.Repositories;
+using Services;
 
 namespace Api.Extensions;
 
@@ -33,6 +35,9 @@ public static class ServiceExtensions
     {
         services.AddScoped<IQuoteRepository, QuoteRepository>();
         services.AddScoped<IRepositoryManager, RepositoryManager>();
+
+        services.AddScoped<IQotdService, QotdService>();
+        services.AddScoped<IServiceManager, ServiceManager>();
 
         return services;
     }
