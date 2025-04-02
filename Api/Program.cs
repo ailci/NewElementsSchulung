@@ -2,6 +2,7 @@ using Api.Controllers;
 using Api.Extensions;
 using Api.Middleware;
 using Logging;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +41,9 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     //await app.ApplyMigrationAsync();
+
+    //Scalar
+    app.MapScalarApiReference();
 
     //Swagger
     app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "Qotd Api v1"));
