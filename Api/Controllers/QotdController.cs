@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Persistence.Contracts;
+using Services;
 using Shared.DataTransferObjects;
 
 namespace Api.Controllers;
