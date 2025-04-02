@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Persistence.Contracts;
+using Persistence.Repositories;
 
 namespace Api.Extensions;
 
@@ -23,6 +25,14 @@ public static class ServiceExtensions
         {
             options.UseSqlServer(connectionString);
         });
+
+        return services;
+    }
+
+    public static IServiceCollection ConfigureDependencyInjection(this IServiceCollection services)
+    {
+        services.AddScoped<IQuoteRepository, QuoteRepository>();
+        services.AddScoped<IRepositoryManager, RepositoryManager>();
 
         return services;
     }

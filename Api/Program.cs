@@ -6,7 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .ConfigureApi() //WebApi
-    .ConfigureDb(builder.Configuration);  //Db
+    .ConfigureDb(builder.Configuration) //Db
+    .ConfigureDependencyInjection();
 
 var app = builder.Build();
 
