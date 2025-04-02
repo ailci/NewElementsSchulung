@@ -33,6 +33,7 @@ public static class ServiceExtensions
         services.AddDbContext<QotdContext>(options =>
         {
             options.UseSqlServer(connectionString);
+            options.EnableSensitiveDataLogging();
         });
 
         return services;
