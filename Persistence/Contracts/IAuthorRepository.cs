@@ -10,4 +10,5 @@ namespace Persistence.Contracts;
 public interface IAuthorRepository
 {
     Task<IEnumerable<Author>> GetAuthorsAsync();
+    Task<Author?> GetAuthorAsync(Guid authorId);
 }

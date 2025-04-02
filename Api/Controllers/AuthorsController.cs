@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using Shared.DataTransferObjects;
 
 namespace Api.Controllers;
 
@@ -36,6 +37,16 @@ public class AuthorsController : ControllerBase
         var authorDtos = await _serviceManager.AuthorService.GetAuthorsAsync();
 
         return Ok(authorDtos);
+    }
+
+    [HttpGet("{id:guid}", Name = "GetAuthor")]  // localhost:7050/api/authors/{id}
+    public async Task<IActionResult> GetAuthor(Guid id)
+    {
+        var author = await _serviceManager.AuthorService.GetAuthorAsync(id);
+
+        if (author is null) return NotFound();
+        
+        return Ok(author);
     }
 
     #endregion

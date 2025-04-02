@@ -6,4 +6,5 @@ namespace Services;
 public interface IAuthorService
 {
     Task<IEnumerable<AuthorDto>> GetAuthorsAsync();
+    Task<AuthorDto?> GetAuthorAsync(Guid authorId);
 }
