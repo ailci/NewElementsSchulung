@@ -40,6 +40,9 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     //await app.ApplyMigrationAsync();
+
+    //Swagger
+    app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "Qotd Api v1"));
 }
 
 app.UseHttpsRedirection();

@@ -24,7 +24,11 @@ public class AuthorsController : ControllerBase
 
     #region GET
 
-    [HttpGet]
+    /// <summary>
+    /// Gets all authors
+    /// </summary>
+    /// <returns>List of authors</returns>
+    [HttpGet(Name = "GetAuthors")]
     public async Task<IActionResult> GetAuthors()
     {
         _logger.LogInformation($"{nameof(GetAuthors)} aufgerufen...");
