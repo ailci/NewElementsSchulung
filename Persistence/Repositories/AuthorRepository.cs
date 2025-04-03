@@ -11,6 +11,11 @@ namespace Persistence.Repositories;
 
 public class AuthorRepository(QotdContext qotdContext) : RepositoryBase<Author>(qotdContext),IAuthorRepository
 {
+    public void CreateAuthor(Author author)
+    {
+        Create(author);
+    }
+
     public async Task<Author?> GetAuthorAsync(Guid authorId)
     {
         return await FindByCondition(author => author.Id == authorId).SingleOrDefaultAsync();
