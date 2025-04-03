@@ -38,6 +38,13 @@ public class AuthorService(IRepositoryManager repositoryManager, ILoggerManager 
     {
         var authors = await repositoryManager.AuthorRepo.GetAuthorsAsync();
 
+        //Ohne Automapper
+        //var authorsDto = authors.Select(author => new AuthorDto
+        //{
+        //    Name = author.Name,
+        //    Description = author.Description
+        //});
+
         return mapper.Map<IEnumerable<AuthorDto>>(authors);
     }
 

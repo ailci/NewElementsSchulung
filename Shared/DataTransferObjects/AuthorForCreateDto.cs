@@ -21,6 +21,8 @@ public class AuthorForCreateDto
 
     [NoFutureDate(ErrorMessage = "Birthdate liegt in der Zukunft")]
     public DateOnly? BirthDate { get; set; }
+
+    [AllowedExtensions("jpg", "jpeg","png","gif")]
     public IFormFile? Photo { get; set; }
     public IEnumerable<QuoteForCreateDto>? Quotes { get; set; }
 }
