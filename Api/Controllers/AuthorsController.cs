@@ -50,4 +50,16 @@ public class AuthorsController : ControllerBase
     }
 
     #endregion
+
+    #region POST
+
+    [HttpPost]
+    public async Task<IActionResult> CreateAuthor([FromBody] AuthorForCreateDto authorForCreateDto)
+    {
+        var authorDto = await _serviceManager.AuthorService.CreateAuthorAsync(authorForCreateDto);
+
+        return Ok();
+    }
+
+    #endregion
 }

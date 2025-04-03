@@ -9,12 +9,22 @@ using Domain.Entities;
 using Domain.Exceptions;
 using Logging;
 using Persistence.Contracts;
+using Shared.Utilities;
 
 namespace Services;
 
 public class AuthorService(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper) 
     : IAuthorService
 {
+    public async Task<AuthorDto> CreateAuthorAsync(AuthorForCreateDto authorForCreateDto)
+    {
+        logger.LogInformation($"{nameof(CreateAuthorAsync)} wurde mit Objekt {authorForCreateDto.LogAsJson()} aufgerufen...");
+
+        //TODO: Author mappen und speichern
+
+        return await Task.FromResult(new AuthorDto {Name = "", Description = ""});
+    }
+
     public async Task<AuthorDto?> GetAuthorAsync(Guid authorId)
     {
         logger.LogInformation($"{nameof(GetAuthorAsync)} mit AuthorId: {authorId} aufgerufen...");
