@@ -54,8 +54,10 @@ public class AuthorsController : ControllerBase
     #region POST
 
     [HttpPost]
-    public async Task<IActionResult> CreateAuthor([FromBody] AuthorForCreateDto authorForCreateDto)
+    public async Task<IActionResult> CreateAuthor(AuthorForCreateDto authorForCreateDto)
     {
+        //if (!ModelState.IsValid) return BadRequest(ModelState); //braucht man nicht, wenn [ApiController] annotiert ist
+
         var authorDto = await _serviceManager.AuthorService.CreateAuthorAsync(authorForCreateDto);
 
         return Ok();
