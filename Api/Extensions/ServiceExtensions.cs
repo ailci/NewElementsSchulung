@@ -4,6 +4,7 @@ using Persistence;
 using Persistence.Contracts;
 using Persistence.Repositories;
 using Services;
+using Services.Resolver;
 
 namespace Api.Extensions;
 
@@ -18,6 +19,7 @@ public static class ServiceExtensions
 
         //Automapper
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.AddTransient<FormFileToByteArrayResolver>();
 
         //Global Exception Handler
         services.AddExceptionHandler<GlobalExceptionHandler>();

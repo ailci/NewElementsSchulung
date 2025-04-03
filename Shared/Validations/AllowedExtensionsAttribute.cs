@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 
 namespace Shared.Validations;
 
+//https://medium.com/@raza.sherazi514/title-custom-file-extension-validation-in-asp-net-core-f73441fa320f
+//https://code-maze.com/aspnetcore-how-to-validate-file-upload-extensions/
 public class AllowedExtensionsAttribute : ValidationAttribute
 {
     private IEnumerable<string> AllowedExtensions { get; set; }

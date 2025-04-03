@@ -20,7 +20,11 @@ public class AuthorService(IRepositoryManager repositoryManager, ILoggerManager 
     {
         logger.LogInformation($"{nameof(CreateAuthorAsync)} wurde mit Objekt {authorForCreateDto.LogAsJson()} aufgerufen...");
 
-        //TODO: Author mappen und speichern
+        var authorEntity = mapper.Map<Author>(authorForCreateDto);
+
+        //logger.LogInformation($"AuthorEntity: {authorEntity.LogAsJson()}");
+
+
 
         return await Task.FromResult(new AuthorDto {Name = "", Description = ""});
     }
