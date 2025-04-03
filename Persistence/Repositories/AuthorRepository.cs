@@ -16,6 +16,13 @@ public class AuthorRepository(QotdContext qotdContext) : RepositoryBase<Author>(
         Create(author);
     }
 
+    public void DeleteAuthor(Author author)
+    { 
+        //Statt zu löschen auf inaktiv zustellen
+        //author.Active = false;
+        Delete(author);
+    }
+
     public async Task<Author?> GetAuthorAsync(Guid authorId)
     {
         return await FindByCondition(author => author.Id == authorId).SingleOrDefaultAsync();

@@ -24,5 +24,5 @@ public class RepositoryManager : IRepositoryManager
 
     public IAuthorRepository AuthorRepo => _authorRepository;
 
-    public async Task SaveAsync() => await _context.SaveChangesAsync();
+    public async Task<bool> SaveAsync() => await _context.SaveChangesAsync() > 0;
 }

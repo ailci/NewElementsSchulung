@@ -30,6 +30,18 @@ public class AuthorService(IRepositoryManager repositoryManager, ILoggerManager 
         return mapper.Map<AuthorDto>(authorEntity);
     }
 
+    public async Task<bool> DeleteAuthorAsync(Guid authorId)
+    {
+        logger.LogInformation($"Der Author mit der Id {authorId} zum Löschen ausgewählt...");
+
+        var authorEntity = await GetAuthorAndCheckIfItExistsAsync(authorId);
+
+        repositoryManager.AuthorRepo.DeleteAuthor(authorEntity);
+
+        //2 Optionen => 1. Exception werfen und mit GlobalExceptionHandler auswerten oder 2. Controller entscheiden lassen
+        return await repositoryManager.SaveAsync();
+    }
+
     public async Task<AuthorDto?> GetAuthorAsync(Guid authorId)
     {
         logger.LogInformation($"{nameof(GetAuthorAsync)} mit AuthorId: {authorId} aufgerufen...");

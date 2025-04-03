@@ -11,5 +11,5 @@ public interface IRepositoryManager
     IQuoteRepository QuoteRepo { get; }
     IAuthorRepository AuthorRepo { get; }
 
-    Task SaveAsync();
+    Task<bool> SaveAsync();
 }

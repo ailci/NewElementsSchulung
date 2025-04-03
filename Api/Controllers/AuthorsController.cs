@@ -65,4 +65,18 @@ public class AuthorsController : ControllerBase
     }
 
     #endregion
+
+    #region DELETE
+
+    [HttpDelete("{id:guid}", Name = "DeleteAuthor")]
+    public async Task<IActionResult> DeleteAuthor(Guid id)
+    {
+        var isDeleted = await _serviceManager.AuthorService.DeleteAuthorAsync(id);
+
+        if (!isDeleted) return Problem(detail: "Author konnte nicht gelöscht werden", statusCode: 501, title: "Error");
+        
+        return NoContent();
+    }
+
+    #endregion
 }
