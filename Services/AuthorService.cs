@@ -24,9 +24,10 @@ public class AuthorService(IRepositoryManager repositoryManager, ILoggerManager 
 
         //logger.LogInformation($"AuthorEntity: {authorEntity.LogAsJson()}");
 
+        repositoryManager.AuthorRepo.CreateAuthor(authorEntity);
+        await repositoryManager.SaveAsync();
 
-
-        return await Task.FromResult(new AuthorDto {Name = "", Description = ""});
+        return mapper.Map<AuthorDto>(authorEntity);
     }
 
     public async Task<AuthorDto?> GetAuthorAsync(Guid authorId)

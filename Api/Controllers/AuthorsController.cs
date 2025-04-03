@@ -60,7 +60,8 @@ public class AuthorsController : ControllerBase
 
         var authorDto = await _serviceManager.AuthorService.CreateAuthorAsync(authorForCreateDto);
 
-        return Ok();
+        //return CreatedAtAction(nameof(GetAuthor), new { id = authorDto.Id }, authorDto);
+        return CreatedAtRoute("GetAuthor", new { id = authorDto.Id }, authorDto);
     }
 
     #endregion
