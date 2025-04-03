@@ -30,8 +30,8 @@ public class AuthorRepository(QotdContext qotdContext) : RepositoryBase<Author>(
         //var author2 = QotdContext.Authors.FindAsync(authorId); //Suche mit Primärschlüsel
     }
 
-    public async Task<IEnumerable<Author>> GetAuthorsAsync()
+    public async Task<IEnumerable<Author>> GetAuthorsAsync(bool trackChanges)
     {
-        return await GetAll().ToListAsync();
+        return await GetAll(trackChanges).ToListAsync();
     }
 }

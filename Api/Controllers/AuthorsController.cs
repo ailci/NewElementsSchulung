@@ -34,7 +34,7 @@ public class AuthorsController : ControllerBase
     {
         _logger.LogInformation($"{nameof(GetAuthors)} aufgerufen...");
 
-        var authorDtos = await _serviceManager.AuthorService.GetAuthorsAsync();
+        var authorDtos = await _serviceManager.AuthorService.GetAuthorsAsync(trackChanges: false);
 
         return Ok(authorDtos);
     }
@@ -71,7 +71,7 @@ public class AuthorsController : ControllerBase
     [HttpDelete("{id:guid}", Name = "DeleteAuthor")]
     public async Task<IActionResult> DeleteAuthor(Guid id)
     {
-        var isDeleted = await _serviceManager.AuthorService.DeleteAuthorAsync(id);
+        var isDeleted = await _serviceManager.AuthorService.DeleteAuthorAsync(id, trackChanges: false);
 
         if (!isDeleted) return Problem(detail: "Author konnte nicht gelöscht werden", statusCode: 501, title: "Error");
         

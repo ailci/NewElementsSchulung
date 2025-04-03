@@ -11,9 +11,9 @@ namespace Persistence.Repositories;
 
 public class QuoteRepository(QotdContext qotdContext) : RepositoryBase<Quote>(qotdContext), IQuoteRepository
 {
-    public async Task<Quote> GetRandomQuoteAsync()
+    public async Task<Quote> GetRandomQuoteAsync(bool trackChanges)
     {
-        var quotes = await GetAll().Include(c => c.Author).ToListAsync(); //alle Sprüche
+        var quotes = await GetAll(trackChanges).Include(c => c.Author).ToListAsync(); //alle Sprüche
         var random = new Random();
 
         return quotes[random.Next(quotes.Count)];

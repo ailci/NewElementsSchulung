@@ -13,11 +13,11 @@ namespace Services;
 public class QotdService(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper) 
     : IQotdService
 {
-    public async Task<QuoteOfTheDayDto> GetQuoteOfTheDayAsync()
+    public async Task<QuoteOfTheDayDto> GetQuoteOfTheDayAsync(bool trackChanges)
     {
         logger.LogInformation($"{nameof(GetQuoteOfTheDayAsync)} aufgerufen...");
 
-        var quote = await repositoryManager.QuoteRepo.GetRandomQuoteAsync();
+        var quote = await repositoryManager.QuoteRepo.GetRandomQuoteAsync(trackChanges);
 
         //var qotd = new QuoteOfTheDayDto
         //{

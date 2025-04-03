@@ -9,7 +9,7 @@ namespace Persistence.Contracts;
 
 public interface IRepositoryBase<T>
 {
-    IQueryable<T> GetAll();
+    IQueryable<T> GetAll(bool trackChanges);
     IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
     void Create(T entity);
     void Update(T entity);

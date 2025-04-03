@@ -9,5 +9,5 @@ namespace Services;
 
 public interface IQotdService
 {
-    Task<QuoteOfTheDayDto> GetQuoteOfTheDayAsync();
+    Task<QuoteOfTheDayDto> GetQuoteOfTheDayAsync(bool trackChanges);
 }

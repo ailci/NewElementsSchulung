@@ -19,6 +19,14 @@ public class QotdController(IServiceManager serviceManager, ILoggerManager logge
     {
         logger.LogInformation("GetQuoteOfTheday aufgerufen...");
 
-        return Ok(await serviceManager.QotdService.GetQuoteOfTheDayAsync());
+        return Ok(await serviceManager.QotdService.GetQuoteOfTheDayAsync(trackChanges: false));
+    } 
+    
+    [HttpGet("secured")]  // => localhost:7050/api/qotd/secured
+    public async Task<IActionResult> GetQuoteOfTheDaySecuredAsync() // => localhost:7050/api/qotd
+    {
+        logger.LogInformation("GetQuoteOfTheDaySecured aufgerufen...");
+
+        return Ok(await serviceManager.QotdService.GetQuoteOfTheDayAsync(trackChanges: false));
     }
 }

@@ -30,7 +30,7 @@ public class AuthorService(IRepositoryManager repositoryManager, ILoggerManager 
         return mapper.Map<AuthorDto>(authorEntity);
     }
 
-    public async Task<bool> DeleteAuthorAsync(Guid authorId)
+    public async Task<bool> DeleteAuthorAsync(Guid authorId, bool trackChanges)
     {
         logger.LogInformation($"Der Author mit der Id {authorId} zum Löschen ausgewählt...");
 
@@ -51,9 +51,9 @@ public class AuthorService(IRepositoryManager repositoryManager, ILoggerManager 
         return mapper.Map<AuthorDto>(author);
     }
 
-    public async Task<IEnumerable<AuthorDto>> GetAuthorsAsync()
+    public async Task<IEnumerable<AuthorDto>> GetAuthorsAsync(bool trackChanges)
     {
-        var authors = await repositoryManager.AuthorRepo.GetAuthorsAsync();
+        var authors = await repositoryManager.AuthorRepo.GetAuthorsAsync(trackChanges);
 
         //Ohne Automapper
         //var authorsDto = authors.Select(author => new AuthorDto

@@ -9,5 +9,5 @@ namespace Persistence.Contracts;
 
 public interface IQuoteRepository : IRepositoryBase<Quote>
 {
-    Task<Quote> GetRandomQuoteAsync();
+    Task<Quote> GetRandomQuoteAsync(bool trackChanges);
 }
