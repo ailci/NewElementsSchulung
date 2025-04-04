@@ -3,7 +3,7 @@ using Shared.DataTransferObjects;
 
 namespace Client.UI.Services;
 
-public class QotdApiService(ILogger<QotdApiService> logger, IHttpClientFactory httpClientFactory) 
+public class QotdApiService(ILogger<QotdApiService> logger, HttpClient client) 
     : IQotdApiService
 {
     private const string QotdUri = "api/qotd";
@@ -12,7 +12,6 @@ public class QotdApiService(ILogger<QotdApiService> logger, IHttpClientFactory h
     {
         logger.LogInformation($"{nameof(GetQuoteOfTheDayAsync)} aufgerufen...");
 
-        var client = httpClientFactory.CreateClient("qotdapiservice");
         return await client.GetFromJsonAsync<QuoteOfTheDayDto>(QotdUri);
     }
 }

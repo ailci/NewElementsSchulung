@@ -7,15 +7,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 //DI
+builder.Services.Configure<QotdAppSettings>(builder.Configuration.GetSection("QotdAppSettings"));
 builder.Services.AddScoped<IQotdApiService, QotdApiService>();
 
 var qotdAppSettings = builder.Configuration.GetSection("QotdAppSettings").Get<QotdAppSettings>();
 
 //Named Http-Client
-builder.Services.AddHttpClient("qotdapiservice", client =>
+//builder.Services.AddHttpClient("qotdapiservice", client =>
+//{
+//    client.BaseAddress = new Uri(qotdAppSettings!.QotdApiServiceUri);
+//    client.DefaultRequestHeaders.Add("Accept","application/json");
+//});
+
+//Typed Client
+builder.Services.AddHttpClient<IQotdApiService, QotdApiService>(client =>
 {
     client.BaseAddress = new Uri(qotdAppSettings!.QotdApiServiceUri);
-    client.DefaultRequestHeaders.Add("Accept","application/json");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
 var app = builder.Build();
