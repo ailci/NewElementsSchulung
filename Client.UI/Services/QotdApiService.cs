@@ -1,11 +1,13 @@
 ﻿using Client.UI.Pages;
+using Microsoft.Extensions.Options;
 using Shared.DataTransferObjects;
 
 namespace Client.UI.Services;
 
-public class QotdApiService(ILogger<QotdApiService> logger, HttpClient client) 
+public class QotdApiService(ILogger<QotdApiService> logger, HttpClient client, IOptions<QotdAppSettings> appSettings) 
     : IQotdApiService
 {
+    private readonly QotdAppSettings _appSettings = appSettings.Value;
     private const string QotdUri = "api/qotd";
     private const string QotdSecuredUri = "api/qotd/secured";
 
@@ -19,6 +21,9 @@ public class QotdApiService(ILogger<QotdApiService> logger, HttpClient client)
     public async Task<QuoteOfTheDayDto?> GetQuoteOfTheDaySecuredAsync()
     {
         logger.LogInformation($"{nameof(GetQuoteOfTheDaySecuredAsync)} aufgerufen...");
+
+        // 1. Variante unschön
+        //client.DefaultRequestHeaders.Add("x-api-key", _appSettings.XApiKey);
 
         return await client.GetFromJsonAsync<QuoteOfTheDayDto>(QotdSecuredUri);
     }

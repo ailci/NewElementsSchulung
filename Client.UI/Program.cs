@@ -1,4 +1,5 @@
 using Client.UI;
+using Client.UI.Handler;
 using Client.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddRazorPages();
 //DI
 builder.Services.Configure<QotdAppSettings>(builder.Configuration.GetSection("QotdAppSettings"));
 builder.Services.AddScoped<IQotdApiService, QotdApiService>();
+builder.Services.AddTransient<ApiKeyDelegatingHandler>();
 
 var qotdAppSettings = builder.Configuration.GetSection("QotdAppSettings").Get<QotdAppSettings>();
 
@@ -24,7 +26,8 @@ builder.Services.AddHttpClient<IQotdApiService, QotdApiService>(client =>
 {
     client.BaseAddress = new Uri(qotdAppSettings!.QotdApiServiceUri);
     client.DefaultRequestHeaders.Add("Accept", "application/json");
-});
+    //client.DefaultRequestHeaders.Add("x-api-key", qotdAppSettings.XApiKey); // 2.Variante nicht ganz so hässlich
+}).AddHttpMessageHandler<ApiKeyDelegatingHandler>();
 
 var app = builder.Build();
 
