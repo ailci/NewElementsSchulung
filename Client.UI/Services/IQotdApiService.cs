@@ -6,4 +6,5 @@ public interface IQotdApiService
 {
     Task<QuoteOfTheDayDto?> GetQuoteOfTheDayAsync();
     Task<QuoteOfTheDayDto?> GetQuoteOfTheDaySecuredAsync();
+    Task<IEnumerable<AuthorDto>?> GetAuthorsAsync();
 }
