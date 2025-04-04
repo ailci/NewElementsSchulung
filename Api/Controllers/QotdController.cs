@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Api.Filter;
+using Domain.Entities;
 using Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,7 @@ public class QotdController(IServiceManager serviceManager, ILoggerManager logge
     } 
     
     [HttpGet("secured")]  // => localhost:7050/api/qotd/secured
+    [ServiceFilter(typeof(ApiKeyAuthFilter))] // 2. Variante via Filter
     public async Task<IActionResult> GetQuoteOfTheDaySecuredAsync() // => localhost:7050/api/qotd
     {
         logger.LogInformation("GetQuoteOfTheDaySecured aufgerufen...");

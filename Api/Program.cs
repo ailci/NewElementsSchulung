@@ -53,7 +53,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseApiKeyAuthMiddleware();
+//app.UseApiKeyAuthMiddleware();  //1. Version via Middleware
 
 app.UseAuthorization();
 
