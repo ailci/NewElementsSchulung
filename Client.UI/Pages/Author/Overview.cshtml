@@ -1,4 +1,39 @@
 ﻿@page
 @model Client.UI.Pages.Author.OverviewModel
-@{
+
+@if (Model.AuthorDtos is not null && Model.AuthorDtos.Any())
+{
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Photo</th>
+            <th>Name</th>
+            <th>Beschreibung</th>
+            <th>Geburtsdatum</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var author in Model.AuthorDtos)
+            {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrWhiteSpace(author.PhotoMimeType) && author.Photo is not null)
+                        {
+                            <!-- src="data:MIMETYPE;base64,NÚTZDATEN" -->
+                            <img width="100" src="data:@author.PhotoMimeType;base64,@Convert.ToBase64String(author.Photo!)" />
+                        }
+                        else
+                        {
+                            <img width="100" src="https://place-hold.it/100" />
+                        }
+                    </td>
+                    <td>@author.Name</td>
+                    <td>@author.Description</td>
+                    <td>@(author.BirthDate is not null ? author.BirthDate.Value.ToShortDateString() : "k.A.")</td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
