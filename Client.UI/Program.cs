@@ -1,3 +1,4 @@
+using Client.UI;
 using Client.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,10 +9,12 @@ builder.Services.AddRazorPages();
 //DI
 builder.Services.AddScoped<IQotdApiService, QotdApiService>();
 
+var qotdAppSettings = builder.Configuration.GetSection("QotdAppSettings").Get<QotdAppSettings>();
+
 //Named Http-Client
 builder.Services.AddHttpClient("qotdapiservice", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7050");
+    client.BaseAddress = new Uri(qotdAppSettings!.QotdApiServiceUri);
     client.DefaultRequestHeaders.Add("Accept","application/json");
 });
 
