@@ -1,11 +1,13 @@
 using System.Text.Json;
+using Client.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Shared.DataTransferObjects;
 
 namespace Client.UI.Pages;
 
-public class IndexModel(ILogger<IndexModel> logger, IHttpClientFactory httpClientFactory) : PageModel
+public class IndexModel(ILogger<IndexModel> logger, IHttpClientFactory httpClientFactory, IQotdApiService qotdApiService) 
+    : PageModel
 {
     public QuoteOfTheDayDto? QotdDto { get; set; }
 
@@ -22,8 +24,11 @@ public class IndexModel(ILogger<IndexModel> logger, IHttpClientFactory httpClien
             //QotdDto = JsonSerializer.Deserialize<QuoteOfTheDayDto>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true});
 
             //2. Version Abkürzung
-            var client = httpClientFactory.CreateClient("qotdapiservice");
-            QotdDto = await client.GetFromJsonAsync<QuoteOfTheDayDto>("api/qotd");
+            //var client = httpClientFactory.CreateClient("qotdapiservice");
+            //QotdDto = await client.GetFromJsonAsync<QuoteOfTheDayDto>("api/qotd");
+
+            //3. Version via Service
+            QotdDto = await qotdApiService.GetQuoteOfTheDayAsync();
         }
         catch (HttpRequestException ex)
         {
