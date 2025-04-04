@@ -31,7 +31,12 @@
                     <td>@author.Name</td>
                     <td>@author.Description</td>
                     <td>@(author.BirthDate is not null ? author.BirthDate.Value.ToShortDateString() : "k.A.")</td>
-                    <td></td>
+                    <td>
+                        <!-- Löschen -->
+                        <form asp-page-handler="Delete" method="post" asp-route-id="@author.Id">
+                            <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>
