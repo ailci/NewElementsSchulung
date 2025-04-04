@@ -12,7 +12,8 @@ builder.ConfigLoggingService();
 builder.Services
     .ConfigureApi() //WebApi
     .ConfigureDb(builder.Configuration) //Db
-    .ConfigureDependencyInjection();
+    .ConfigureDependencyInjection()
+    .ConfigureOutputCaching();
 
 var app = builder.Build();
 
@@ -54,6 +55,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 //app.UseApiKeyAuthMiddleware();  //1. Version via Middleware
+
+app.UseOutputCache();
 
 app.UseAuthorization();
 

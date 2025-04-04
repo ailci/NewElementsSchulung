@@ -17,7 +17,10 @@ public static class ServiceExtensions
         {
             //Global Filter
             //options.Filters.Add<ApiKeyAuthFilter>();
-        });
+
+            options.ReturnHttpNotAcceptable = true; //Benachrichtige den Client dass sein Wunsch nicht akzeptiert wird
+            options.RespectBrowserAcceptHeader = true;
+        }).AddXmlSerializerFormatters();
 
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         services.AddOpenApi();
@@ -32,6 +35,7 @@ public static class ServiceExtensions
 
         //Filter
         services.AddScoped<ApiKeyAuthFilter>();
+        services.AddScoped<ValidationFilter>();
 
         return services;
     }
@@ -58,6 +62,22 @@ public static class ServiceExtensions
         services.AddScoped<IQotdService, QotdService>();
         services.AddScoped<IAuthorService, AuthorService>();
         services.AddScoped<IServiceManager, ServiceManager>();
+
+        return services;
+    }
+
+    public static IServiceCollection ConfigureOutputCaching(this IServiceCollection services)
+    {
+        //Default
+        //services.AddOutputCache();
+
+        services.AddOutputCache(options =>
+        {
+            //options.AddBasePolicy(b => b.Expire(TimeSpan.FromSeconds(10))); // für alle Endpoints für 10 Sekunden
+
+            options.AddPolicy("120SecondsDuration", p => p.Expire(TimeSpan.FromSeconds(120)));
+            options.AddPolicy("RouteParamDuration", p => p.Expire(TimeSpan.FromSeconds(20)).SetVaryByRouteValue("id"));
+        });
 
         return services;
     }

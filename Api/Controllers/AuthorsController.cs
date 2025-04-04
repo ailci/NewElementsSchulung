@@ -1,6 +1,8 @@
-﻿using Logging;
+﻿using Api.Filter;
+using Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using Services;
 using Shared.DataTransferObjects;
 
@@ -40,6 +42,9 @@ public class AuthorsController : ControllerBase
     }
 
     [HttpGet("{id:guid}", Name = "GetAuthor")]  // localhost:7050/api/authors/{id}
+    //[OutputCache(Duration = 60)]
+    [OutputCache(PolicyName = "120SecondsDuration", VaryByRouteValueNames = ["id"])]
+    //[OutputCache(PolicyName = "RouteParamDuration")]
     public async Task<IActionResult> GetAuthor(Guid id)
     {
         var author = await _serviceManager.AuthorService.GetAuthorAsync(id);
@@ -54,6 +59,7 @@ public class AuthorsController : ControllerBase
     #region POST
 
     [HttpPost]
+    [ServiceFilter(typeof(ValidationFilter))]
     public async Task<IActionResult> CreateAuthor(AuthorForCreateDto authorForCreateDto)
     {
         //if (!ModelState.IsValid) return BadRequest(ModelState); //braucht man nicht, wenn [ApiController] annotiert ist
