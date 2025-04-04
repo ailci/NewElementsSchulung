@@ -10,6 +10,7 @@ public class IndexModel(ILogger<IndexModel> logger, IHttpClientFactory httpClien
     : PageModel
 {
     public QuoteOfTheDayDto? QotdDto { get; set; }
+    public string? ErrorMessage { get; set; }
 
     public async Task OnGetAsync()
     {
@@ -28,11 +29,15 @@ public class IndexModel(ILogger<IndexModel> logger, IHttpClientFactory httpClien
             //QotdDto = await client.GetFromJsonAsync<QuoteOfTheDayDto>("api/qotd");
 
             //3. Version via Service
-            QotdDto = await qotdApiService.GetQuoteOfTheDayAsync();
+            //QotdDto = await qotdApiService.GetQuoteOfTheDayAsync();
+
+            //4. Version mit Service und API-KEY
+            QotdDto = await qotdApiService.GetQuoteOfTheDaySecuredAsync();
         }
         catch (HttpRequestException ex)
         {
            logger.LogError($"StatusCode: {ex.StatusCode} Message: {ex.Message}");
+           ErrorMessage = ex.Message;
         }
     }
 }
