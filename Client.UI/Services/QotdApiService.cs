@@ -35,4 +35,13 @@ public class QotdApiService(ILogger<QotdApiService> logger, HttpClient client, I
 
         return await client.GetFromJsonAsync<IEnumerable<AuthorDto>>(QotdAuthorsUri);
     }
+
+    public async Task<bool> DeleteAuthorAsync(Guid authorId)
+    {
+        logger.LogInformation($"{nameof(DeleteAuthorAsync)} mit AuthorId: {authorId} aufgerufen...");
+
+        var response = await client.DeleteAsync($"{QotdAuthorsUri}/{authorId}");
+
+        return response.IsSuccessStatusCode;
+    }
 }

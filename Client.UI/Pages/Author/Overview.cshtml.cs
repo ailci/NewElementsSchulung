@@ -24,4 +24,26 @@ public class OverviewModel(ILogger<OverviewModel> logger, IQotdApiService qotdAp
             ErrorMessage = ex.Message;
         }
     }
+
+    public async Task<IActionResult> OnPostDeleteAsync(Guid id)
+    {
+        try
+        {
+            var isDeleted = await qotdApiService.DeleteAuthorAsync(id);
+
+            if (!isDeleted)
+            {
+                ErrorMessage = "Author konnte nicht gelöscht werden";
+                return Page();
+            }
+                
+            return RedirectToPage();
+        }
+        catch (HttpRequestException ex)
+        {
+            logger.LogError($"StatusCode: {ex.StatusCode} Message: {ex.Message}");
+            ErrorMessage = ex.Message;
+            return Page();
+        }
+    }
 }
